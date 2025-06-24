@@ -5,36 +5,8 @@ const authMiddleware = require('../middleware/auth.middleware');
 
 
 // GET todos los productos
-// router.get('/', async (req, res) => {
-//   const productos = await Producto.find();
-//   res.json(productos);
-// });
-//FILTRO Y ORDENAMIENTO DE PRODUCTOS
-// router.get('/', async (req, res) => {
-//   try {
-//     const { tipo, destacado, tipoPrenda, orden } = req.query;
-
-//     const filtro = {};
-
-//     if (tipo) filtro.tipo = tipo;
-//     if (destacado) filtro.destacado = destacado === 'true';
-//     if (tipoPrenda) filtro['ropa.tipoPrenda'] = tipoPrenda;
-
-//     // Orden por precio
-//     let ordenamiento = {};
-//     if (orden === 'asc') ordenamiento.precio = 1;
-//     else if (orden === 'desc') ordenamiento.precio = -1;
-
-//     const productos = await Producto.find(filtro).sort(ordenamiento);
-//     res.json(productos);
-//   } catch (err) {
-//     res.status(500).json({ mensaje: 'Error al obtener productos' });
-//   }
-// });
-
-
-
-//////////////////////////
+// Permite filtrar por tipo, tipoPrenda y nombre
+// - tipoPrenda: ropa, accesorio, calzado
 router.get('/', async (req, res) => {
   try {
     const { tipo, destacado, tipoPrenda, orden, nombre } = req.query;
@@ -77,7 +49,7 @@ router.post('/', authMiddleware,async (req, res) => {
   res.json(nuevoProducto);
 });
 
-// POST /api/productos/bulk
+// POST /api/productos/bulk //para pruebas agregar varios productos a la vez
 router.post('/bulk',authMiddleware, async (req, res) => {
   try {
     const productos = req.body; // Espera un array de productos
